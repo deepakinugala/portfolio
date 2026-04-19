@@ -1,0 +1,90 @@
+# Deepak Inugala — LLM & MLOps Engineer
+
+> AI Platform Engineering · Agentic AI · GPU Inference Infrastructure · International Delivery
+> 10+ years of infrastructure and platform engineering, specializing in production LLM
+> and AI/ML systems end-to-end — serving, MLOps pipelines, agentic AI, and sovereign
+> air-gapped LLM Ops.
+
+## Contact
+
+- Name: Deepak Inugala
+- Location: Abu Dhabi, UAE
+- Email: deepak.1990@hotmail.com
+- Phone: +971 50 494 5921
+- LinkedIn: https://www.linkedin.com/in/deepak-inugala
+- Portfolio: https://deepakinugala.github.io/portfolio/
+- Open to: Staff / Principal / Lead roles in AI Platform, LLMOps, MLOps, SRE
+
+## Current role
+
+**Group 42 (G42)** — LLM & MLOps Engineer · Senior SRE · AI Platform (07/2019 – Present).
+Sole technical authority for GPU infrastructure at client sites across Kazakhstan, Angola,
+Bahrain; supports Maldives and Ethiopia remotely. Delivers across GOVINT (classified
+air-gapped), OSINT, and Smart Nation programmes.
+
+## Core expertise
+
+- **LLM Serving**: vLLM (PagedAttention, continuous batching, tensor parallelism, prefix
+  caching, AWQ/GPTQ), NVIDIA Triton (TensorRT, ONNX, dynamic batching, ensembles),
+  LiteLLM (OpenAI-compatible gateway).
+- **Agentic AI**: LangGraph (stateful supervisor topology), LangChain, AutoGen, MCP
+  (Model Context Protocol) tool servers, n8n workflow automation, OpenClaw, NemoClaw.
+- **RAG**: Qdrant, Weaviate, Open WebUI, HuggingFace embeddings, sub-50 ms retrieval.
+- **MLOps**: MLflow, Kubeflow Pipelines, Argo Workflows, DVC, Feast, Seldon Core,
+  Weights & Biases, Kyverno model admission.
+- **GPU / HPC**: NVIDIA H100 / H200 / A100, MIG, DCGM Exporter, KubeRay, CUDA/cuDNN,
+  InfiniBand, NVLink, NCCL tuning.
+- **Kubernetes & Cloud**: AKS, EKS, RKE2, Rancher, Helm, ArgoCD, Argo Rollouts,
+  Kustomize, Azure, AWS, G42 Cloud, Harbor.
+- **Air-Gapped LLM Ops**: HF snapshot_download offline, Harbor mirrors, data diode
+  transfer, AWQ size reduction, internal MinIO model registry.
+- **Observability & Security**: Prometheus, Grafana (30+ dashboards), Loki, Fluent Bit,
+  Falco, Trivy, OPA Gatekeeper, Kyverno, Keycloak OIDC, zero-trust NetworkPolicies.
+- **IaC**: Terraform, Ansible, GitLab CI/CD, GitOps, Python (LangGraph/LangChain,
+  MLflow SDK, Kubeflow SDK), Bash.
+
+## Highlighted outcomes
+
+- Deployed LLMs from 7B to 72B parameters; AWQ 4-bit reduced 72B from 144GB to 36GB VRAM.
+- Achieved P99 TTFT < 200ms at 1,000+ concurrent requests on vLLM / H100/H200.
+- Cut MLOps release cycles from weeks to hours via Kubeflow + Argo + MLflow + ArgoCD.
+- Reduced overnight SRE on-call interventions by 40% using LangGraph multi-agent
+  automation with human-in-the-loop gates.
+- Cut operational toil by 50% via MCP tool servers exposing internal APIs to LLM agents.
+- 3,000+ physical Linux servers previously managed at HCL InfoSystems; 35% reduction
+  in repeat incidents at First Abu Dhabi Bank.
+
+## Experience timeline
+
+- 2019 – Present: **Group 42 (G42)** — LLM & MLOps Engineer / Senior SRE / AI Platform.
+- 2018 – 2019: **First Abu Dhabi Bank (FAB)** — Cloud Engineer (FGB-NBAD merger integration).
+- 2015 – 2018: **HCL InfoSystems** — Linux Engineer (3,000+ server fleet).
+
+## Education
+
+- MBA, Jawaharlal Nehru Technological University (2012–2015).
+- B.Tech, Jawaharlal Nehru Technological University (2008–2012).
+
+## Certifications
+
+- Microsoft Azure Administrator Associate (AZ-104) — valid through 07/2027.
+- Microsoft Azure Solutions Architect Expert (AZ-305) — valid through 07/2027.
+- AWS Solutions Architect – Associate.
+- Certified Kubernetes Administrator (CKA) — renewal in progress.
+- G42 Cloud Certified Engineer.
+- Red Hat Certified Engineer (RHCE).
+
+## Resumes (role-tailored PDFs)
+
+- LLMOps / MLOps Engineer: /resumes/LLMOps_MLOps_Engineer.pdf
+- Senior SRE: /resumes/Senior_SRE_Engineer.pdf
+- Team Lead SRE: /resumes/TeamLead_SRE_Engineer.pdf
+- Senior DevOps: /resumes/Senior_DevOps_Engineer.pdf
+- Senior DevSecOps: /resumes/Senior_DevSecOps_Engineer.pdf
+- Senior Cloud: /resumes/Senior_Cloud_Engineer.pdf
+- Senior Kubernetes Administrator: /resumes/Senior_Kubernetes_Administrator.pdf
+- Senior HPC Engineer: /resumes/Senior_HPC_Engineer.pdf
+
+## Languages
+
+English & Hindi (Professional) · Telugu (Native) · German (Elementary).
