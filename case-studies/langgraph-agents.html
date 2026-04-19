@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Case Study — LangGraph Multi-Agent SRE Automation</title>
+  <meta name="description" content="Case study: LangGraph-based stateful multi-agent SRE automation — supervisor topology routing Prometheus alerts to retrieval, execution, and validation agents with human-in-the-loop gates." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A4%96%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="../index.html"><span class="brand-mark">DI</span><span class="brand-text">Deepak Inugala</span></a>
+      <nav><ul class="nav-links">
+        <li><a href="../index.html#about">About</a></li>
+        <li><a href="../index.html#experience">Experience</a></li>
+        <li><a href="./index.html">Case Studies</a></li>
+        <li><a href="../index.html#cv">Resumes</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+      </ul></nav>
+      <button id="theme-toggle" class="icon-btn" type="button" aria-label="Toggle theme">
+        <span class="theme-icon-dark">&#9789;</span><span class="theme-icon-light">&#9788;</span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <article class="case">
+      <section class="hero">
+        <div class="container">
+          <p class="eyebrow"><a href="./index.html">← Case Studies</a> · Agentic AI</p>
+          <h1>LangGraph Multi-Agent <span class="accent">SRE Automation</span></h1>
+          <p class="lead">Stateful multi-agent workflow with a supervisor topology — routes Prometheus
+            alerts to specialist agents for retrieval, execution, and validation. Human-in-the-loop on
+            destructive actions, full audit logging, and a 40% reduction in overnight on-call interventions.</p>
+          <ul class="chips">
+            <li>LangGraph</li><li>Supervisor Topology</li><li>Qdrant</li><li>RAG</li>
+            <li>MCP</li><li>n8n</li><li>HITL Gates</li><li>Audit Logging</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container case-body">
+          <h2>The problem</h2>
+          <p>Overnight on-call pages for recurring, well-documented incidents (disk pressure, runaway
+            pods, noisy neighbors) created alert fatigue and degraded team availability. Traditional
+            runbooks required manual execution; the playbooks already described safe, repeatable
+            actions — but no system to execute them with guardrails.</p>
+
+          <h2>Architecture</h2>
+          <pre class="code">
+  Alertmanager webhook
+           │
+           ▼
+  ┌─────────────────────┐
+  │  Supervisor Agent   │  classifies alert → routes
+  └───┬────────┬────────┘
+      │        │
+      ▼        ▼
+  ┌────────┐ ┌──────────┐
+  │ Retr.  │ │ Exec.    │──► kubectl / Ansible (RBAC-scoped SA)
+  │ Agent  │ │ Agent    │    via MCP tool servers
+  │ Qdrant │ └──┬───────┘
+  │  RAG   │    │
+  └────────┘    ▼
+              ┌──────────┐
+              │ Valid.   │──► Prometheus query verification
+              │ Agent    │
+              └──┬───────┘
+                 │
+                 ▼
+         HITL approval gate on destructive ops
+                 │
+                 ▼
+         Audit log (MinIO + Loki) + Mattermost post</pre>
+
+          <h2>Implementation highlights</h2>
+          <ul>
+            <li><strong>LangGraph supervisor:</strong> stateful graph with typed edges between agents; failed transitions retry with exponential backoff and a dead-letter path to a human operator.</li>
+            <li><strong>Retrieval agent:</strong> Qdrant vector store (Kubernetes StatefulSet on Longhorn PVCs) indexing runbooks, post-mortems, and architectural docs — sub-50 ms retrieval.</li>
+            <li><strong>Execution agent:</strong> invokes MCP tool servers that wrap the Kubernetes API, GitLab, and Prometheus. The ServiceAccount is RBAC-scoped per namespace — even if the LLM went rogue, blast radius is bounded.</li>
+            <li><strong>Validation agent:</strong> re-queries Prometheus after remediation to confirm the symptom resolved before closing the incident.</li>
+            <li><strong>HITL:</strong> any action classified as destructive (pod deletion, node drain, scaling down) posts to Mattermost for human approval; timeout escalates to PagerDuty.</li>
+            <li><strong>Audit:</strong> every state transition, prompt, and tool call persisted to MinIO + Loki — reviewable post-incident.</li>
+          </ul>
+
+          <h2>Safety model</h2>
+          <ul>
+            <li>Tool exposure is explicit via MCP — no arbitrary shell, no broad kubeconfig.</li>
+            <li>Agents run as a dedicated ServiceAccount with NetworkPolicy isolation; egress locked to the MCP endpoints and internal vLLM.</li>
+            <li>Every destructive action is behind a human gate. Every read action is logged.</li>
+            <li>Kill-switch: a single ConfigMap flag disables the execution agent globally.</li>
+          </ul>
+
+          <h2>Outcomes</h2>
+          <ul>
+            <li><strong>−40% overnight on-call interventions</strong> in the first 90 days.</li>
+            <li><strong>−50% operational toil</strong> overall (measured by tickets resolved without human touch).</li>
+            <li>Mean time to triage on covered alert classes dropped from minutes to seconds.</li>
+            <li>Runbook quality improved — the system exposes gaps in documentation, driving continuous improvement.</li>
+          </ul>
+
+          <p class="back-cta"><a class="btn ghost" href="./index.html">← More case studies</a>
+            <a class="btn primary" href="../index.html#contact">Discuss this work</a></p>
+        </div>
+      </section>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container foot">
+      <p>&copy; <span id="year"></span> Deepak Inugala · <a href="../index.html">Back to portfolio</a></p>
+    </div>
+  </footer>
+  <script src="../script.js" defer></script>
+  <script src="../chatbot.js" defer></script>
+</body>
+</html>

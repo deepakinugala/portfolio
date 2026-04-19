@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Case Studies — Deepak Inugala</title>
+  <meta name="description" content="Deep-dive case studies: vLLM production serving, LangGraph multi-agent SRE automation, air-gapped sovereign LLM Ops." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A4%96%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="../index.html"><span class="brand-mark">DI</span><span class="brand-text">Deepak Inugala</span></a>
+      <nav><ul class="nav-links">
+        <li><a href="../index.html#about">About</a></li>
+        <li><a href="../index.html#experience">Experience</a></li>
+        <li><a href="./index.html">Case Studies</a></li>
+        <li><a href="../index.html#cv">Resumes</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+      </ul></nav>
+      <button id="theme-toggle" class="icon-btn" type="button" aria-label="Toggle theme">
+        <span class="theme-icon-dark">&#9789;</span><span class="theme-icon-light">&#9788;</span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <p class="eyebrow">Case Studies</p>
+        <h1>Production AI systems — <span class="accent">deep dives</span></h1>
+        <p class="lead">Architecture notes and outcomes from real deployments. Engineered for recruiters
+          and hiring managers who want depth, not just buzzwords.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="proj-grid">
+          <a class="cv-card" href="./vllm-serving.html">
+            <span class="cv-badge">AI</span>
+            <h3>vLLM Multi-Model Serving on H100/H200</h3>
+            <p>7B–72B models, AWQ 4-bit, continuous batching, P99 TTFT &lt; 200 ms @ 1k+ concurrent. Production architecture + observability.</p>
+          </a>
+          <a class="cv-card" href="./langgraph-agents.html">
+            <span class="cv-badge">AI</span>
+            <h3>LangGraph Multi-Agent SRE Automation</h3>
+            <p>Supervisor topology, Qdrant RAG, kubectl/Ansible execution, HITL approval gates. −40% overnight on-call.</p>
+          </a>
+          <a class="cv-card" href="./air-gapped-llm.html">
+            <span class="cv-badge">AI</span>
+            <h3>Air-Gapped Sovereign LLM Ops</h3>
+            <p>Offline HF mirror → AWQ quantize → data diode → Harbor + MinIO → isolated K8s. GOVINT-grade pipeline.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container foot">
+      <p>&copy; <span id="year"></span> Deepak Inugala · <a href="../index.html">Back to portfolio</a></p>
+      <p class="foot-meta"><a href="../llms.txt">llms.txt</a></p>
+    </div>
+  </footer>
+  <script src="../script.js" defer></script>
+  <script src="../chatbot.js" defer></script>
+</body>
+</html>

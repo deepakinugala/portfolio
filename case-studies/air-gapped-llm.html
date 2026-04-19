@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Case Study — Air-Gapped Sovereign LLM Ops</title>
+  <meta name="description" content="Case study: air-gapped sovereign LLM deployment pipeline — HuggingFace offline mirror, AWQ quantization, data diode transfer, Harbor registry, internal MinIO model registry, isolated Kubernetes clusters." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A4%96%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="../index.html"><span class="brand-mark">DI</span><span class="brand-text">Deepak Inugala</span></a>
+      <nav><ul class="nav-links">
+        <li><a href="../index.html#about">About</a></li>
+        <li><a href="../index.html#experience">Experience</a></li>
+        <li><a href="./index.html">Case Studies</a></li>
+        <li><a href="../index.html#cv">Resumes</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+      </ul></nav>
+      <button id="theme-toggle" class="icon-btn" type="button" aria-label="Toggle theme">
+        <span class="theme-icon-dark">&#9789;</span><span class="theme-icon-light">&#9788;</span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <article class="case">
+      <section class="hero">
+        <div class="container">
+          <p class="eyebrow"><a href="./index.html">← Case Studies</a> · Sovereign AI</p>
+          <h1>Air-Gapped Sovereign <span class="accent">LLM Ops</span></h1>
+          <p class="lead">End-to-end pipeline to deploy modern LLMs into fully isolated, sovereign
+            environments — from internet-connected bastion through data diode transfer to an air-gapped
+            Kubernetes cluster with its own model registry. Deployed for GOVINT clients.</p>
+          <ul class="chips">
+            <li>Air-Gapped</li><li>Offline HF Mirror</li><li>AWQ</li>
+            <li>Data Diode</li><li>Harbor</li><li>MinIO Model Registry</li>
+            <li>Kyverno</li><li>Sovereign</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container case-body">
+          <h2>The problem</h2>
+          <p>Sovereign and GOVINT customers cannot reach the public internet — no direct HuggingFace
+            pulls, no docker.io, no ghcr.io, no GitHub Releases. They still need the latest open-weight
+            models, reproducible deploys, and the ability to audit what's running in production. The
+            entire supply chain has to be transferred across an air gap with integrity guarantees.</p>
+
+          <h2>Pipeline</h2>
+          <pre class="code">
+  ┌──────────────────────────────────────────────┐
+  │  BASTION (internet-connected, staging)       │
+  │  • HF snapshot_download (HF_HUB_OFFLINE=0)   │
+  │  • AutoAWQ 4-bit quantization                │
+  │  • MMLU / HumanEval validation gates         │
+  │  • Package: weights + tokenizer + configs    │
+  │  • Sign + checksum                           │
+  └────────────────────┬─────────────────────────┘
+                       │  (one-way)
+                       ▼  data diode
+  ┌──────────────────────────────────────────────┐
+  │  AIR-GAPPED SIDE                             │
+  │  • Harbor registry (nvcr.io/docker.io mirror)│
+  │  • MinIO model registry (versioned artefacts)│
+  │  • MLflow Registry (internal)                │
+  │  • Kyverno admission policy:                 │
+  │      reject Deployments referencing          │
+  │      unregistered model paths                │
+  │  • vLLM / Triton on isolated K8s cluster     │
+  └──────────────────────────────────────────────┘</pre>
+
+          <h2>Implementation highlights</h2>
+          <ul>
+            <li><strong>Offline HuggingFace mode:</strong> on the production side, <code>HF_HUB_OFFLINE=1</code> and <code>TRANSFORMERS_OFFLINE=1</code> are enforced — every artefact (model, tokenizer, config, chat template) must be present locally or the pod refuses to start.</li>
+            <li><strong>AWQ before transfer:</strong> quantizing on the bastion reduces the bytes that have to cross the diode (144GB → 36GB for a 72B model) and removes the need for GPU quantization tooling on the air-gapped side.</li>
+            <li><strong>Quality gates:</strong> quantized checkpoints run through MMLU and HumanEval benchmarks on the bastion; a quality regression above the configured threshold blocks transfer.</li>
+            <li><strong>Registry mirrors:</strong> Harbor mirrors <code>nvcr.io</code>, <code>docker.io</code>, and <code>ghcr.io</code> — internal deployments pull only from Harbor.</li>
+            <li><strong>MinIO as model registry:</strong> versioned, checksummed artefact storage with MLflow Registry pointing at MinIO. Provenance is auditable.</li>
+            <li><strong>Kyverno enforcement:</strong> admission policy rejects any vLLM Deployment referencing a model path that isn't registered — closing the "someone sideloaded a model" audit gap.</li>
+          </ul>
+
+          <h2>Threat &amp; compliance model</h2>
+          <ul>
+            <li>Full provenance chain: model → quantization → validation → transfer → registry → deploy, all logged with immutable audit trail.</li>
+            <li>Zero-trust NetworkPolicies inside the cluster; egress denied by default.</li>
+            <li>Keycloak OIDC for human access; short-lived tokens; no shared kubeconfigs.</li>
+            <li>Falco + Trivy + OPA Gatekeeper enforce runtime and build-time controls.</li>
+          </ul>
+
+          <h2>Outcomes</h2>
+          <ul>
+            <li>Sovereign clients able to run current open-weight LLMs without exposure to the public internet.</li>
+            <li>Reproducible, auditable pipeline — what's in production matches what was validated, byte for byte.</li>
+            <li>Same developer experience on the air-gapped side as in cloud environments.</li>
+            <li>Pattern reused across GOVINT, OSINT, and Smart Nation verticals at G42.</li>
+          </ul>
+
+          <p class="back-cta"><a class="btn ghost" href="./index.html">← More case studies</a>
+            <a class="btn primary" href="../index.html#contact">Discuss this work</a></p>
+        </div>
+      </section>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container foot">
+      <p>&copy; <span id="year"></span> Deepak Inugala · <a href="../index.html">Back to portfolio</a></p>
+    </div>
+  </footer>
+  <script src="../script.js" defer></script>
+  <script src="../chatbot.js" defer></script>
+</body>
+</html>

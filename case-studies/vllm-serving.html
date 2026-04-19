@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Case Study — vLLM Production Serving on H100/H200</title>
+  <meta name="description" content="Case study: production vLLM serving platform on NVIDIA H100/H200 clusters — 7B to 72B models, AWQ 4-bit quantization, sub-200ms P99 TTFT at 1,000+ concurrent requests." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A4%96%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="../index.html"><span class="brand-mark">DI</span><span class="brand-text">Deepak Inugala</span></a>
+      <nav><ul class="nav-links">
+        <li><a href="../index.html#about">About</a></li>
+        <li><a href="../index.html#experience">Experience</a></li>
+        <li><a href="./index.html">Case Studies</a></li>
+        <li><a href="../index.html#cv">Resumes</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+      </ul></nav>
+      <button id="theme-toggle" class="icon-btn" type="button" aria-label="Toggle theme">
+        <span class="theme-icon-dark">&#9789;</span><span class="theme-icon-light">&#9788;</span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <article class="case">
+      <section class="hero">
+        <div class="container">
+          <p class="eyebrow"><a href="./index.html">← Case Studies</a> · AI Platform</p>
+          <h1>vLLM Multi-Model Serving on <span class="accent">H100/H200</span></h1>
+          <p class="lead">Production LLM inference platform spanning 7B to 72B models, delivering sub-200ms
+            P99 TTFT at 1,000+ concurrent requests — with AWQ 4-bit quantization, tensor parallelism,
+            and HPA on DCGM GPU metrics.</p>
+          <ul class="chips">
+            <li>vLLM</li><li>NVIDIA H100/H200</li><li>AWQ 4-bit</li><li>Tensor Parallelism</li>
+            <li>Continuous Batching</li><li>Prefix Caching</li><li>DCGM</li><li>HPA</li><li>Kubernetes</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container case-body">
+          <h2>The problem</h2>
+          <p>Internal teams needed a single, reliable inference platform capable of serving both
+            general-purpose chat (7B–13B) and specialized reasoning workloads (70B+) with consistent
+            latency SLOs. Off-the-shelf inference stacks either burned through VRAM unnecessarily or
+            collapsed under real concurrent workloads.</p>
+
+          <h2>Architecture</h2>
+          <pre class="code">
+┌────────────────────────────────────────────────────────────┐
+│  Clients: Open WebUI · n8n · LangChain · Mattermost bots   │
+└─────────────────────────┬──────────────────────────────────┘
+                          ▼
+              ┌──────────────────────┐
+              │  LiteLLM Gateway     │  OpenAI-compatible API
+              │  (rate limit, keys,  │  load balance + fallback
+              │   cost per team)     │
+              └─────────┬────────────┘
+                        ▼
+   ┌────────────────────┴──────────────────────┐
+   ▼                                             ▼
+┌──────────────────┐                      ┌──────────────────┐
+│ vLLM (7B/13B)    │                      │ vLLM (70B/72B)   │
+│ 1 × H100         │                      │ 4 × H200 TP=4    │
+│ AWQ 4-bit        │                      │ AWQ 4-bit        │
+│ Prefix caching   │                      │ Continuous batch │
+└────────┬─────────┘                      └────────┬─────────┘
+         │                                          │
+         └──────────────┬──────────────────────────┘
+                        ▼
+          Prometheus · DCGM · Grafana · Alertmanager</pre>
+
+          <h2>Implementation highlights</h2>
+          <ul>
+            <li><strong>Quantization:</strong> AWQ 4-bit (AutoAWQ) shrank a 72B checkpoint from ~144GB → ~36GB VRAM with negligible quality loss validated against MMLU and HumanEval benchmark gates before production promotion.</li>
+            <li><strong>Tensor parallelism:</strong> TP=4 across NVLink-connected H200s; careful NCCL tuning and pinned CPU memory to avoid PCIe bottlenecks.</li>
+            <li><strong>Continuous batching + prefix caching:</strong> vLLM's PagedAttention paired with prefix cache drove token throughput up ~3× at mixed-length conversational workloads.</li>
+            <li><strong>Autoscaling:</strong> Kubernetes HPA wired to DCGM GPU utilization + vLLM queue depth metrics rather than CPU — avoided the common failure mode of scaling too late.</li>
+            <li><strong>Health:</strong> liveness/readiness on <code>/health</code>, with a separate warm-up probe so Kubernetes doesn't route traffic before the model is fully loaded into VRAM.</li>
+          </ul>
+
+          <h2>Observability</h2>
+          <ul>
+            <li>vLLM Prometheus metrics: <code>e2e_request_latency_seconds</code>, <code>num_requests_running</code>, <code>gpu_cache_usage_perc</code>, <code>generation_tokens_total</code>.</li>
+            <li>Alertmanager rules for P99 TTFT degradation, KV-cache exhaustion, and GPU hang detection.</li>
+            <li>30+ Grafana dashboards covering golden signals per model, per tenant, per region.</li>
+            <li>Distributed tracing across LiteLLM → vLLM for end-to-end request attribution.</li>
+          </ul>
+
+          <h2>Outcomes</h2>
+          <ul>
+            <li><strong>P99 TTFT &lt; 200 ms</strong> at 1,000+ concurrent requests.</li>
+            <li><strong>72B deployable on 4× H200</strong> via AWQ (would otherwise require 8× H100 at FP16).</li>
+            <li><strong>Zero-downtime model upgrades</strong> via Argo Rollouts + Seldon Core canary with Prometheus analysis gates.</li>
+            <li>Unified OpenAI-compatible API via LiteLLM — consumers don't know or care which backend serves them.</li>
+          </ul>
+
+          <p class="back-cta"><a class="btn ghost" href="./index.html">← More case studies</a>
+            <a class="btn primary" href="../index.html#contact">Discuss this work</a></p>
+        </div>
+      </section>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container foot">
+      <p>&copy; <span id="year"></span> Deepak Inugala · <a href="../index.html">Back to portfolio</a></p>
+    </div>
+  </footer>
+  <script src="../script.js" defer></script>
+  <script src="../chatbot.js" defer></script>
+</body>
+</html>

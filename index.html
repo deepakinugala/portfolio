@@ -64,6 +64,7 @@
           <li><a href="#skills">Skills</a></li>
           <li><a href="#experience">Experience</a></li>
           <li><a href="#ai">AI &amp; Agents</a></li>
+          <li><a href="./case-studies/index.html">Case Studies</a></li>
           <li><a href="#certifications">Certifications</a></li>
           <li><a href="#cv">Resumes</a></li>
           <li><a href="#contact">Contact</a></li>
@@ -274,17 +275,20 @@
         <p class="section-lead">
           Selected production AI/agentic systems I've built &amp; operated. All run on Kubernetes with
           GPU scheduling, OIDC, NetworkPolicy isolation, and full observability.
+          Three have <a href="./case-studies/index.html">full case studies</a>.
         </p>
         <div class="proj-grid">
           <article class="proj-card">
             <header><h3>vLLM Multi-Model Serving Platform</h3></header>
             <p>Production vLLM on H100/H200 clusters with AWQ 4-bit quantization, tensor parallelism, continuous batching, prefix caching. HPA on DCGM GPU metrics; P99 TTFT &lt; 200 ms @ 1k+ concurrent.</p>
             <ul class="chips small"><li>vLLM</li><li>H100/H200</li><li>AWQ</li><li>HPA</li><li>DCGM</li></ul>
+            <p><a href="./case-studies/vllm-serving.html">Read case study →</a></p>
           </article>
           <article class="proj-card">
             <header><h3>LangGraph SRE Automation Agents</h3></header>
             <p>Stateful multi-agent workflow: supervisor routes Prometheus alerts to retrieval (Qdrant RAG), execution (kubectl/Ansible RBAC), and validation agents. Human-in-the-loop on destructive ops. −40% overnight on-call.</p>
             <ul class="chips small"><li>LangGraph</li><li>Qdrant</li><li>RAG</li><li>HITL</li></ul>
+            <p><a href="./case-studies/langgraph-agents.html">Read case study →</a></p>
           </article>
           <article class="proj-card">
             <header><h3>MCP Tool Servers for Internal APIs</h3></header>
@@ -300,6 +304,7 @@
             <header><h3>Air-Gapped Sovereign LLM Ops</h3></header>
             <p>Complete offline pipeline: HF snapshot download + AWQ quantize on bastion → data diode transfer → Harbor + internal MinIO registry → isolated K8s deploy. Delivered for sovereign/GOVINT clients.</p>
             <ul class="chips small"><li>Offline HF</li><li>Harbor</li><li>MinIO</li><li>Data Diode</li></ul>
+            <p><a href="./case-studies/air-gapped-llm.html">Read case study →</a></p>
           </article>
           <article class="proj-card">
             <header><h3>End-to-End MLOps Pipeline</h3></header>
@@ -422,5 +427,6 @@
   </footer>
 
   <script src="./script.js" defer></script>
+  <script src="./chatbot.js" defer></script>
 </body>
 </html>
