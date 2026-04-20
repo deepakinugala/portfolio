@@ -15,17 +15,17 @@
     {
       id: "intro",
       q: ["who are you", "about you", "introduce", "who is deepak", "tell me about"],
-      a: "I'm Deepak Inugala — an LLM & MLOps Engineer based in Abu Dhabi with 10+ years of infrastructure and platform engineering experience, currently at G42 building production LLM and agentic AI systems."
+      a: "I'm Deepak Inugala — Senior Site Reliability Engineer at G42 in Abu Dhabi, with 11+ years across Linux, cloud, Kubernetes, and AI platform engineering. I lead a 6-person SRE team and specialize in production LLM serving, MLOps, agentic AI, and sovereign air-gapped LLM Ops."
     },
     {
       id: "experience",
-      q: ["years experience", "how long", "how many years"],
-      a: "Over 10 years: Group 42 (G42) since 2019 as LLM & MLOps / Senior SRE / AI Platform, First Abu Dhabi Bank 2018–2019 as Cloud Engineer, and HCL InfoSystems 2015–2018 as Linux Engineer."
+      q: ["years experience", "how long", "how many years", "career", "background"],
+      a: "11+ years across six roles: Senior SRE at G42 since 03/2023 (leading a 6-person team), SRE at G42 from 07/2019–03/2023, Cloud Engineer at First Abu Dhabi Bank 01/2018–07/2019, Technical Specialist at HCL Technologies 05/2017–01/2018, Linux Engineer at HCL Infosystems (Bengaluru, UIDAI programme) 08/2015–04/2017, and Technical Support Engineer at Polaris 10/2012–06/2013."
     },
     {
       id: "current-role",
-      q: ["current role", "current job", "g42", "group 42", "where do you work"],
-      a: "I'm at Group 42 (G42) in Abu Dhabi — LLM & MLOps Engineer, Senior SRE, AI Platform. I'm the sole technical authority for GPU infrastructure at client sites across Kazakhstan, Angola, Bahrain, with remote support for Maldives and Ethiopia."
+      q: ["current role", "current job", "g42", "group 42", "where do you work", "team lead", "lead"],
+      a: "I'm Senior SRE at Group 42 (G42) in Abu Dhabi since 03/2023 — leading a 6-person SRE team covering GPU platform, LLM/MLOps tooling, and international client delivery. I'm the sole technical authority for GPU infrastructure at client sites in Kazakhstan, Angola, and Bahrain, with remote support for Maldives and Ethiopia."
     },
     {
       id: "ai-stack",
@@ -79,13 +79,18 @@
     },
     {
       id: "linux-scale",
-      q: ["linux", "datacenter", "servers", "rhel", "centos", "hcl", "3000 servers"],
-      a: "Earlier in my career at HCL InfoSystems I managed 3,000+ physical Linux servers (RHEL, CentOS) across enterprise data centers — provisioning, Ansible configuration, hardware (iDRAC/iLO), firmware lifecycle. Led on-prem-to-cloud migration with under 2 hours downtime and 0% data loss."
+      q: ["linux", "datacenter", "servers", "rhel", "centos", "hcl", "3000 servers", "uidai", "aadhaar", "bengaluru", "india"],
+      a: "At HCL Infosystems in Bengaluru (08/2015–04/2017) I was Linux Engineer on the UIDAI / Aadhaar programme, managing 3,000+ physical RHEL/CentOS servers — provisioning, Ansible configuration, hardware (iDRAC/iLO), firmware lifecycle — and led on-prem-to-cloud migration with under 2 hours downtime and 0% data loss. I then moved to HCL Technologies in Abu Dhabi (05/2017–01/2018) as Technical Specialist on the Daman health insurance account."
     },
     {
       id: "banking",
       q: ["bank", "banking", "fab", "first abu dhabi", "merger", "cloudera", "hadoop"],
-      a: "At First Abu Dhabi Bank (2018–2019) I completed the FGB–NBAD merger IT integration with zero major incidents, designed AWS architectures (EC2, EKS, RDS, S3, Lambda), administered Cloudera CDH clusters (Kerberos + Ranger), and led incident response reducing repeat incidents by 35%."
+      a: "At First Abu Dhabi Bank (01/2018–07/2019) I was Cloud Engineer on the FGB–NBAD post-merger IT integration — delivered with zero major incidents. I designed AWS architectures (EC2, EKS, RDS, S3, Lambda), administered Cloudera CDH clusters with Kerberos + Ranger, and led incident response, reducing repeat incidents by 35%."
+    },
+    {
+      id: "polaris",
+      q: ["polaris", "videocon", "hyderabad", "first job", "early career", "d2h"],
+      a: "My first role: Technical Support Engineer at Polaris Consulting & Services in Hyderabad (10/2012–06/2013) on the Videocon d2h account — Linux and network operations, ticket triage, and production support."
     },
     {
       id: "countries",
@@ -94,18 +99,18 @@
     },
     {
       id: "certs",
-      q: ["certification", "certificate", "certified", "azure", "aws certified", "cka", "rhce"],
-      a: "Certifications: Azure Administrator Associate (AZ-104, valid through 07/2027), Azure Solutions Architect Expert (AZ-305, valid through 07/2027), AWS Solutions Architect Associate, Certified Kubernetes Administrator (CKA, renewing), G42 Cloud Certified Engineer, Red Hat Certified Engineer (RHCE)."
+      q: ["certification", "certificate", "certified", "azure", "aws certified", "cka", "rhce", "rhcsa", "cloudera", "gitops"],
+      a: "Certifications: Azure Administrator Associate (AZ-104, valid through 07/2027), Azure Solutions Architect Expert (AZ-305, valid through 07/2027), AWS Solutions Architect Associate, Certified Kubernetes Administrator (CKA, renewing), G42 Cloud Certified Engineer, Red Hat Certified Engineer (RHCE), Red Hat Certified System Administrator (RHCSA), Cloudera Certified Administrator for Apache Hadoop, GitOps Certified Fundamentals, and Cloud Architecture: Design Decisions."
     },
     {
       id: "education",
       q: ["education", "university", "degree", "mba", "btech", "jntu"],
-      a: "MBA and B.Tech from Jawaharlal Nehru Technological University (B.Tech 2008–2012, MBA 2012–2015)."
+      a: "MBA and B.Tech from Jawaharlal Nehru Technological University — B.Tech 08/2008–06/2012, MBA 10/2012–04/2015."
     },
     {
       id: "languages",
-      q: ["languages", "speak", "hindi", "telugu", "german", "english"],
-      a: "Languages: English and Hindi (professional), Telugu (native), German (elementary)."
+      q: ["languages", "speak", "hindi", "telugu", "english"],
+      a: "Languages: English and Hindi (full professional), Telugu (native)."
     },
     {
       id: "contact",
