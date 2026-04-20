@@ -110,7 +110,7 @@
     {
       id: "contact",
       q: ["contact", "email", "phone", "linkedin", "reach", "hire", "get in touch", "message"],
-      a: "Reach me at deepak.1990@hotmail.com or +971 50 494 5921. LinkedIn: linkedin.com/in/deepak-inugala. I'm open to Staff / Principal / Lead roles in AI Platform, LLMOps, MLOps, or SRE — globally."
+      a: "Reach me at deepak.1990@hotmail.com or +971 50 494 5921. LinkedIn: linkedin.com/in/deepak-inugala. I'm open to Staff / Principal AI Platform & LLMOps roles, Senior SRE Engineer, Senior DevOps Engineer, and Senior Infrastructure Engineer — globally."
     },
     {
       id: "cv",
