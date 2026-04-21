@@ -22,6 +22,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="./styles.css" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A4%96%3C/text%3E%3C/svg%3E" />
+  <meta name="theme-color" content="#0a0e14" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
 
   <script type="application/ld+json">
   {
@@ -59,7 +61,7 @@
         <span class="brand-text">Deepak Inugala</span>
       </a>
       <nav aria-label="Primary">
-        <ul class="nav-links">
+        <ul class="nav-links" id="primary-nav">
           <li><a href="#about">About</a></li>
           <li><a href="#skills">Skills</a></li>
           <li><a href="#experience">Experience</a></li>
@@ -70,6 +72,9 @@
           <li><a href="#contact">Contact</a></li>
         </ul>
       </nav>
+      <button id="hamburger" class="hamburger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="primary-nav">
+        &#9776;
+      </button>
       <button id="theme-toggle" class="icon-btn" type="button" aria-label="Toggle theme">
         <span class="theme-icon-dark" aria-hidden="true">&#9789;</span>
         <span class="theme-icon-light" aria-hidden="true">&#9788;</span>
