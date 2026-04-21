@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>What Changed — Portfolio Improvements</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#0a0e14;--bg-alt:#0f141b;--surface:#141a23;--border:#1e2631;--text:#e6edf3;--text-dim:#9aa7b5;--accent:#22d3ee;--accent-2:#34d399;--danger:#f87171;--warning:#fbbf24;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:"Inter",sans-serif;font-size:15px;line-height:1.6;padding:2rem 1.25rem;}
+.container{max-width:960px;margin:0 auto;}
+h1{font-size:1.6rem;font-weight:800;letter-spacing:-.02em;margin-bottom:.25rem;}
+.subtitle{color:var(--text-dim);font-family:"JetBrains Mono",monospace;font-size:.85rem;margin-bottom:2.5rem;}
+.change{background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-bottom:1.25rem;overflow:hidden;}
+.change-header{display:flex;align-items:center;gap:.75rem;padding:.9rem 1.1rem;border-bottom:1px solid var(--border);background:var(--bg-alt);}
+.sev{font-family:"JetBrains Mono",monospace;font-size:.72rem;font-weight:700;padding:.2rem .55rem;border-radius:999px;}
+.sev.critical{background:rgba(248,113,113,.15);color:var(--danger);border:1px solid rgba(248,113,113,.3);}
+.sev.medium{background:rgba(251,191,36,.1);color:var(--warning);border:1px solid rgba(251,191,36,.25);}
+.sev.low{background:rgba(52,211,153,.1);color:var(--accent-2);border:1px solid rgba(52,211,153,.25);}
+.change-title{font-weight:700;font-size:.95rem;}
+.files{margin-left:auto;display:flex;gap:.4rem;flex-wrap:wrap;}
+.file-tag{font-family:"JetBrains Mono",monospace;font-size:.68rem;padding:.15rem .5rem;border-radius:999px;background:var(--bg);border:1px solid var(--border);color:var(--text-dim);}
+.change-body{display:grid;grid-template-columns:1fr 1fr;gap:0;}
+.col{padding:1rem 1.1rem;}
+.col.before{border-right:1px solid var(--border);}
+.col-label{font-family:"JetBrains Mono",monospace;font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.6rem;display:flex;align-items:center;gap:.4rem;}
+.col-label.before-label{color:var(--danger);}
+.col-label.after-label{color:var(--accent-2);}
+.col-label::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor;display:inline-block;}
+.demo{background:var(--bg-alt);border:1px solid var(--border);border-radius:8px;padding:.75rem 1rem;font-size:.88rem;}
+.demo code{font-family:"JetBrains Mono",monospace;font-size:.8em;background:rgba(34,211,238,.1);padding:1px 5px;border-radius:3px;color:var(--accent);}
+.demo .strike{text-decoration:line-through;color:var(--text-dim);}
+.demo .good{color:var(--accent-2);}
+.demo .bad{color:var(--danger);}
+/* mock nav */
+.mock-nav{background:var(--surface);border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:space-between;padding:.5rem .75rem;gap:.5rem;}
+.mock-brand{font-family:"JetBrains Mono",monospace;font-size:.82rem;display:flex;align-items:center;gap:.5rem;}
+.mock-mark{width:22px;height:22px;border-radius:5px;background:linear-gradient(135deg,#22d3ee,#34d399);display:inline-grid;place-items:center;color:#001014;font-size:.6rem;font-weight:700;}
+.mock-links{display:flex;gap:.25rem;}
+.mock-link{font-size:.75rem;padding:.25rem .5rem;border-radius:5px;color:var(--text-dim);}
+.mock-link.active{color:var(--accent);background:var(--bg-alt);}
+.hamburger-icon{border:1px solid var(--border);background:var(--bg-alt);width:28px;height:28px;border-radius:5px;display:inline-grid;place-items:center;font-size:.9rem;color:var(--text);}
+/* scroll offset demo */
+.mock-page{border-radius:8px;overflow:hidden;border:1px solid var(--border);}
+.mock-sticky{background:color-mix(in srgb,var(--bg) 82%,transparent);border-bottom:1px solid var(--border);padding:.4rem .75rem;font-size:.75rem;font-family:"JetBrains Mono",monospace;color:var(--accent);position:sticky;top:0;}
+.mock-section{padding:.75rem;font-size:.82rem;color:var(--text-dim);}
+.mock-section strong{color:var(--text);}
+.hidden-behind{background:rgba(248,113,113,.08);border-left:3px solid var(--danger);}
+.not-hidden{background:rgba(52,211,153,.08);border-left:3px solid var(--accent-2);}
+/* prose demo */
+.prose-bad{max-width:280px;font-size:.88rem;color:var(--text-dim);line-height:1.5;}
+.prose-good{max-width:280px;font-size:.88rem;color:var(--text-dim);line-height:1.5;text-wrap:pretty;}
+/* theme-color */
+.phone-bar{border-radius:6px 6px 0 0;padding:.3rem .6rem;font-family:"JetBrains Mono",monospace;font-size:.7rem;display:flex;justify-content:space-between;align-items:center;}
+/* summary */
+.summary{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;margin-top:2rem;}
+.summary h2{font-size:1rem;margin-bottom:.75rem;font-weight:700;}
+.row{display:flex;align-items:center;gap:.75rem;padding:.5rem 0;border-bottom:1px solid var(--border);font-size:.88rem;}
+.row:last-child{border-bottom:none;}
+.dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <h1>Portfolio — What Changed</h1>
+  <p class="subtitle">Comparing old (deepakinugala.github.io/portfolio) vs. updated files</p>
+
+  <!-- 1. Mobile nav -->
+  <div class="change">
+    <div class="change-header">
+      <span class="sev critical">Critical</span>
+      <span class="change-title">Mobile navigation — completely broken → hamburger menu</span>
+      <div class="files"><span class="file-tag">styles.css</span><span class="file-tag">script.js</span><span class="file-tag">index.html</span></div>
+    </div>
+    <div class="change-body">
+      <div class="col before">
+        <div class="col-label before-label">Before</div>
+        <div class="demo">
+          <div class="mock-nav" style="max-width:280px;">
+            <div class="mock-brand"><div class="mock-mark">DI</div>Deepak Inugala</div>
+            <!-- nav links hidden, nothing shown -->
+            <div style="font-size:.75rem;color:var(--danger);">☓ nav hidden, nothing here</div>
+          </div>
+          <p style="margin-top:.6rem;font-size:.8rem;color:var(--danger);">On mobile (≤780px): <code>nav-links</code> was set to <code>display:none</code> with no hamburger button. Users had zero navigation.</p>
+        </div>
+      </div>
+      <div class="col">
+        <div class="col-label after-label">After</div>
+        <div class="demo">
+          <div class="mock-nav" style="max-width:280px;">
+            <div class="mock-brand"><div class="mock-mark">DI</div>Deepak Inugala</div>
+            <div style="display:flex;align-items:center;gap:.4rem;">
+              <div class="hamburger-icon">☰</div>
+            </div>
+          </div>
+          <p style="margin-top:.6rem;font-size:.8rem;color:var(--accent-2);">Hamburger (☰) button appears on mobile. Tap → nav links drop in below the bar. Tap outside or tap a link → closes automatically.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Scroll offset -->
+  <div class="change">
+    <div class="change-header">
+      <span class="sev critical">Critical</span>
+      <span class="change-title">Anchor links — section title hidden behind sticky header → fixed</span>
+      <div class="files"><span class="file-tag">styles.css</span></div>
+    </div>
+    <div class="change-body">
+      <div class="col before">
+        <div class="col-label before-label">Before</div>
+        <div class="demo">
+          <div class="mock-page" style="max-height:110px;overflow:hidden;">
+            <div class="mock-sticky">📌 sticky header</div>
+            <div class="mock-section hidden-behind"><strong style="color:var(--danger);">← About ← hidden behind header</strong><br>I build and run the infrastructure…</div>
+          </div>
+          <p style="margin-top:.6rem;font-size:.8rem;color:var(--danger);">Clicking "About" in nav jumped the page so the "About" heading landed directly behind the sticky header.</p>
+        </div>
+      </div>
+      <div class="col">
+        <div class="col-label after-label">After</div>
+        <div class="demo">
+          <div class="mock-page" style="max-height:110px;overflow:hidden;">
+            <div class="mock-sticky">📌 sticky header</div>
+            <div style="height:8px;"></div>
+            <div class="mock-section not-hidden"><strong style="color:var(--accent-2);">About ← visible ✓</strong><br>I build and run the infrastructure…</div>
+          </div>
+          <p style="margin-top:.6rem;font-size:.8rem;color:var(--accent-2);"><code>scroll-margin-top: 72px</code> added to all <code>section[id]</code> elements — 72px clears the sticky nav height.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Scroll-spy -->
+  <div class="change">
+    <div class="change-header">
+      <span class="sev medium">Medium</span>
+      <span class="change-title">Scroll-spy — nav doesn't track position → highlights active section</span>
+      <div class="files"><span class="file-tag">script.js</span></div>
+    </div>
+    <div class="change-body">
+      <div class="col before">
+        <div class="col-label before-label">Before</div>
+        <div class="demo">
+          <div class="mock-nav">
+            <div class="mock-links">
+              <span class="mock-link">About</span>
+              <span class="mock-link">Skills</span>
+              <span class="mock-link">Experience</span>
+            </div>
+          </div>
+          <p style="margin-top:.6rem;font-size:.8rem;color:var(--danger);">All nav links always look the same regardless of scroll position. No visual indication of where you are on the page.</p>
+        </div>
+      </div>
+      <div class="col">
+        <div class="col-label after-label">After</div>
+        <div class="demo">
+          <div class="mock-nav">
+            <div class="mock-links">
+              <span class="mock-link">About</span>
+              <span class="mock-link active">Skills ←</span>
+              <span class="mock-link">Experience</span>
+            </div>
+          </div>
+          <p style="margin-top:.6rem;font-size:.8rem;color:var(--accent-2);">IntersectionObserver watches each section. As you scroll, the matching nav link gets <code>aria-current="page"</code> and highlights in cyan.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. theme-color -->
+  <div class="change">
+    <div class="change-header">
+      <span class="sev medium">Medium</span>
+      <span class="change-title">Android Chrome toolbar — white bar in dark mode → matches site</span>
+      <div class="files"><span class="file-tag">index.html</span><span class="file-tag">case-studies/*.html</span></div>
+    </div>
+    <div class="change-body">
+      <div class="col before">
+        <div class="col-label before-label">Before</div>
+        <div class="demo">
+          <div class="phone-bar" style="background:#ffffff;color:#000;">
+            <span>9:41</span><span>● ● ●</span>
+          </div>
+          <div style="background:var(--bg);height:40px;border-radius:0 0 6px 6px;"></div>
+          <p style="margin-top:.6rem;font-size:.8rem;color:var(--danger);">Android Chrome showed a white/grey browser toolbar above the dark site — jarring contrast.</p>
+        </div>
+      </div>
+      <div class="col">
+        <div class="col-label after-label">After</div>
+        <div class="demo">
+          <div class="phone-bar" style="background:#0a0e14;color:var(--text-dim);">
+            <span>9:41</span><span>● ● ●</span>
+          </div>
+          <div style="background:var(--bg);height:40px;border-radius:0 0 6px 6px;"></div>
+          <p style="margin-top:.6rem;font-size:.8rem;color:var(--accent-2);"><code>&lt;meta name="theme-color" content="#0a0e14"&gt;</code> added. Chrome toolbar now matches the site background.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. text-wrap + aria-current -->
+  <div class="change">
+    <div class="change-header">
+      <span class="sev low">Low</span>
+      <span class="change-title">Prose line-breaks + case study nav active state</span>
+      <div class="files"><span class="file-tag">styles.css</span><span class="file-tag">case-studies/*.html</span></div>
+    </div>
+    <div class="change-body">
+      <div class="col before">
+        <div class="col-label before-label">Before</div>
+        <div class="demo">
+          <div class="prose-bad">Senior SRE leading GPU clusters, vLLM serving, and MLOps
+pipelines at scale.</div>
+          <p style="margin-top:.6rem;font-size:.8rem;color:var(--danger);">Line breaks fell wherever the browser decided — sometimes leaving a single orphan word on the last line.</p>
+        </div>
+      </div>
+      <div class="col">
+        <div class="col-label after-label">After</div>
+        <div class="demo">
+          <div class="prose-good">Senior SRE leading GPU clusters, vLLM serving, and MLOps pipelines at scale.</div>
+          <p style="margin-top:.6rem;font-size:.8rem;color:var(--accent-2);"><code>text-wrap: pretty</code> on <code>p</code>, <code>.lead</code>, <code>.section-lead</code> — browser balances line lengths, avoids orphans. Also: "Case Studies" nav link now highlighted when on case study pages.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Summary -->
+  <div class="summary">
+    <h2>Summary — 7 files changed, 5 issues fixed</h2>
+    <div class="row"><div class="dot" style="background:var(--danger);"></div><strong>Critical:</strong>&nbsp;Mobile nav completely broken — now has hamburger menu</div>
+    <div class="row"><div class="dot" style="background:var(--danger);"></div><strong>Critical:</strong>&nbsp;Anchor links hide behind sticky header — fixed with scroll-margin-top</div>
+    <div class="row"><div class="dot" style="background:var(--warning);"></div><strong>Medium:</strong>&nbsp;No active section indicator while scrolling — added scroll-spy</div>
+    <div class="row"><div class="dot" style="background:var(--warning);"></div><strong>Medium:</strong>&nbsp;Android Chrome toolbar mismatch in dark mode — fixed with theme-color meta</div>
+    <div class="row"><div class="dot" style="background:var(--accent-2);"></div><strong>Low:</strong>&nbsp;Prose orphans + case study nav not marked active — fixed</div>
+    <div class="row" style="margin-top:.25rem;color:var(--text-dim);font-size:.82rem;">No content was changed. No new sections added. All changes are functional/UX only.</div>
+  </div>
+
+</div>
+</body>
+</html>
