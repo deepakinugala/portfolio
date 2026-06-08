@@ -57,6 +57,7 @@
 ├── PROJECT_CONTEXT.md          ← THIS FILE — LLM/dev onboarding (deep reference)
 ├── SYSTEM_PROMPT.md            ← Short rules file — paste into LLM system/instructions slot
 ├── AGENTS.md                   ← Cross-LLM agent entry point (Cursor/Aider/Continue/Windsurf)
+├── LLM_SETUP.md                ← Step-by-step setup for Claude Project / Custom GPT / Gemini Gem
 │
 ├── LinkedIn-Export-Profile.pdf ← Authoritative LinkedIn export (source of truth for experience)
 │
