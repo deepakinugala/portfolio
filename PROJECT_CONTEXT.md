@@ -54,7 +54,9 @@
 ├── robots.txt                  ← (if present) crawler hints
 ├── sitemap.xml                 ← (if present) SEO sitemap
 ├── README.md                   ← Repo readme, Cloudflare Worker upgrade docs
-├── PROJECT_CONTEXT.md          ← THIS FILE — LLM/dev onboarding
+├── PROJECT_CONTEXT.md          ← THIS FILE — LLM/dev onboarding (deep reference)
+├── SYSTEM_PROMPT.md            ← Short rules file — paste into LLM system/instructions slot
+├── AGENTS.md                   ← Cross-LLM agent entry point (Cursor/Aider/Continue/Windsurf)
 │
 ├── LinkedIn-Export-Profile.pdf ← Authoritative LinkedIn export (source of truth for experience)
 │
